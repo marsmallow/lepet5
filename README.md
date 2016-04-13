@@ -2,6 +2,8 @@
 
 ![GitHub Logo](src/images/logo.jpg)
 
+Make Over [Tralala](http://www.bistrobaron.com/index.html)
+
 ## Struktur Projek
 
     |--build/  //Dimana semua hasil production diletakkan disini

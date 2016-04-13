@@ -12,6 +12,8 @@ var autoprefix = require('gulp-autoprefixer');
 var minifyCSS = require('gulp-minify-css');
 var browserSync = require('browser-sync').create();
 var server = require('gulp-server-livereload');
+var uncss = require('gulp-uncss-task');
+
 
 gulp.task('default',['imagemin','htmlmin','scripts','styles','browser-sync'],function() {
 
@@ -27,6 +29,14 @@ gulp.task('default',['imagemin','htmlmin','scripts','styles','browser-sync'],fun
       gulp.run('styles');
   });
 
+});
+
+gulp.task('uncss', function() {
+    gulp.src('./build/main.css')
+        .pipe(uncss({
+            html: ['index.html']
+        }))
+        .pipe(gulp.dest('./build'));
 });
 
 //Live Reload
