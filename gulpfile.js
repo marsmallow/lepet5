@@ -12,27 +12,9 @@ var autoprefix = require('gulp-autoprefixer');
 var minifyCSS = require('gulp-minify-css');
 var browserSync = require('browser-sync').create();
 var uncss = require('gulp-uncss');
-var cleanCSS = require('gulp-clean-css');
 
 
-gulp.task('default',['imagemin','htmlmin','scripts','styles','browser-sync','uncss','minify-css'],function() {
-});
-
-gulp.task('uncss', function() {
-    gulp.src('./build/styles/*.css')
-        .pipe(uncss({
-            html: ['./build/*.html']
-        }))
-        .pipe(gulp.dest('./build/styles/'));
-});
-
-gulp.task('minify-css', function() {
-    return gulp.src('./build/styles/*.css')
-        .pipe(cleanCSS({debug: true}, function(details) {
-            console.log(details.name + ' Sebelum : ' + details.stats.originalSize);
-            console.log(details.name + ' Sesudah : ' + details.stats.minifiedSize);
-        }))
-        .pipe(gulp.dest('./build/styles/'));
+gulp.task('default',['imagemin','htmlmin','scripts','styles','browser-sync'],function() {
 });
 
 // Static server
@@ -79,6 +61,9 @@ gulp.task('scripts',function() {
 gulp.task('styles',function(){
     gulp.src(['./src/styles/*.css'])
     .pipe(concat('styles.css'))
+    .pipe(uncss({
+        html: ['./build/*.html']
+      }))
     .pipe(autoprefix('last 2 versions'))
     .pipe(minifyCSS())
     .pipe(gulp.dest('./build/styles/'));

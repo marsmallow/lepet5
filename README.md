@@ -1,7 +1,5 @@
 # frontend-kickstarter
 
-![GitHub Logo](src/images/logo.jpg)
-
 Make Over [Tralala](http://www.bistrobaron.com/index.html)
 
 ## Struktur Projek
@@ -35,6 +33,9 @@ Make Over [Tralala](http://www.bistrobaron.com/index.html)
   ``
     npm -g install gulp
   ``
+
+## Color Pallette  
+   #e4b661
 
 ## Jalankan
 Masuk ke direktori project
