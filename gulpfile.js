@@ -11,43 +11,28 @@ var uglify = require('gulp-uglify');
 var autoprefix = require('gulp-autoprefixer');
 var minifyCSS = require('gulp-minify-css');
 var browserSync = require('browser-sync').create();
-var server = require('gulp-server-livereload');
-var uncss = require('gulp-uncss-task');
+var uncss = require('gulp-uncss');
+var cleanCSS = require('gulp-clean-css');
 
 
-gulp.task('default',['imagemin','htmlmin','scripts','styles','browser-sync'],function() {
-
-  gulp.watch('./src/*.html',function() {
-      gulp.run('htmlmin');
-  });
-
-  gulp.watch('./src/scripts/*.js',function(){
-      gulp.run('jshint');
-  });
-
-  gulp.watch('./src/styles/*.css',function(){
-      gulp.run('styles');
-  });
-
+gulp.task('default',['imagemin','htmlmin','scripts','styles','browser-sync','uncss','minify-css'],function() {
 });
 
 gulp.task('uncss', function() {
-    gulp.src('./build/main.css')
+    gulp.src('./build/styles/*.css')
         .pipe(uncss({
-            html: ['index.html']
+            html: ['./build/*.html']
         }))
-        .pipe(gulp.dest('./build'));
+        .pipe(gulp.dest('./build/styles/'));
 });
 
-//Live Reload
-
-gulp.task('webserver', function() {
-  gulp.src('app')
-    .pipe(server({
-      livereload: true,
-      directoryListing: true,
-      open: true
-    }));
+gulp.task('minify-css', function() {
+    return gulp.src('./build/styles/*.css')
+        .pipe(cleanCSS({debug: true}, function(details) {
+            console.log(details.name + ' Sebelum : ' + details.stats.originalSize);
+            console.log(details.name + ' Sesudah : ' + details.stats.minifiedSize);
+        }))
+        .pipe(gulp.dest('./build/styles/'));
 });
 
 // Static server
